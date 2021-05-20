@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30413.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_AngryBirds", "01_AngryBirds\01_AngryBirds.vcxproj", "{0906BA46-A8B5-4E03-BEE3-7686FD0D9DDE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_Splines", "02_Splines\02_Splines.vcxproj", "{0B549E7A-A79E-4460-A1BD-66793C515C6C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03_RayTracing", "03_RayTracing\03_RayTracing.vcxproj", "{012989D4-6B24-4066-8854-1AEB805B7105}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04_Stork", "04_Stork\04_Stork.vcxproj", "{D157BE01-E253-4211-B093-F384BE344518}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05_StorkGame", "05_StorkGame\05_StorkGame.vcxproj", "{2506CCDE-2C32-45B1-9EA7-DC5D8D8154C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0906BA46-A8B5-4E03-BEE3-7686FD0D9DDE}.Debug|x64.ActiveCfg = Debug|x64
+		{0906BA46-A8B5-4E03-BEE3-7686FD0D9DDE}.Debug|x64.Build.0 = Debug|x64
+		{0906BA46-A8B5-4E03-BEE3-7686FD0D9DDE}.Release|x64.ActiveCfg = Release|x64
+		{0906BA46-A8B5-4E03-BEE3-7686FD0D9DDE}.Release|x64.Build.0 = Release|x64
+		{0B549E7A-A79E-4460-A1BD-66793C515C6C}.Debug|x64.ActiveCfg = Debug|x64
+		{0B549E7A-A79E-4460-A1BD-66793C515C6C}.Debug|x64.Build.0 = Debug|x64
+		{0B549E7A-A79E-4460-A1BD-66793C515C6C}.Release|x64.ActiveCfg = Release|x64
+		{0B549E7A-A79E-4460-A1BD-66793C515C6C}.Release|x64.Build.0 = Release|x64
+		{012989D4-6B24-4066-8854-1AEB805B7105}.Debug|x64.ActiveCfg = Debug|x64
+		{012989D4-6B24-4066-8854-1AEB805B7105}.Debug|x64.Build.0 = Debug|x64
+		{012989D4-6B24-4066-8854-1AEB805B7105}.Release|x64.ActiveCfg = Release|x64
+		{012989D4-6B24-4066-8854-1AEB805B7105}.Release|x64.Build.0 = Release|x64
+		{D157BE01-E253-4211-B093-F384BE344518}.Debug|x64.ActiveCfg = Debug|x64
+		{D157BE01-E253-4211-B093-F384BE344518}.Debug|x64.Build.0 = Debug|x64
+		{D157BE01-E253-4211-B093-F384BE344518}.Release|x64.ActiveCfg = Release|x64
+		{D157BE01-E253-4211-B093-F384BE344518}.Release|x64.Build.0 = Release|x64
+		{2506CCDE-2C32-45B1-9EA7-DC5D8D8154C3}.Debug|x64.ActiveCfg = Debug|x64
+		{2506CCDE-2C32-45B1-9EA7-DC5D8D8154C3}.Debug|x64.Build.0 = Debug|x64
+		{2506CCDE-2C32-45B1-9EA7-DC5D8D8154C3}.Release|x64.ActiveCfg = Release|x64
+		{2506CCDE-2C32-45B1-9EA7-DC5D8D8154C3}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CB3024C-0B9B-4C6D-A4F1-C4F0E010C949}
+	EndGlobalSection
+EndGlobal
