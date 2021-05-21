@@ -693,7 +693,10 @@ void onMouseMotion(int x, int y)
 float Angle = 0;
 // `Idle' esemenykezelo, jelzi, hogy az ido telik, az Idle esemenyek frekvenciajara csak a 0 a garantalt minimalis ertek
 void onIdle() {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__)     
 	Sleep(100);
+#else
+	usleep(100 * 1000);
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
