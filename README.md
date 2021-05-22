@@ -52,3 +52,17 @@ Clicking with the mouse sets the control points' location and the mouse click's 
 - **C**: Clear screen.
 
 ![Splines Demo](/extras/splines.gif)
+
+### 03 Ray Tracing
+Calculates an image by tracing the path of light for each pixel.
+Supports cylinder and paraboloid shapes and point light sources.
+Surface types can be smooth (metallic, glass) or diffuse (plastic).
+Renders very slowly since the CPU does the majority of the calculations (do not use this in production).
+
+**Keyboard controls**
+- **+**: Increases the glass' refraction coefficient by 0.1.
+- **0**: Resets the glass' refraction coefficient to 1.
+- **\<space\>**: Rerender scene.
+- **W/A/S/D**: Move camera.
+
+![Ray Tracing Scene](/extras/20131108_g3_remote1_hidef.png)
