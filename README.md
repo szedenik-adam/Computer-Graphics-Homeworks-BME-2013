@@ -39,3 +39,16 @@ Drag the red bird with the mouse from the slingshot to the left and try to hit t
 - **R/D/F/G**: Manual movement of the green bird (up/down movement only allowed when the automatic movement is disabled).
 
 ![Angry Birds Gameplay](/extras/angrybirds.gif)
+
+### 02 Splines
+2D Catmull-Rom and Bezier Spline drawing based on user defined control points and weights.
+Use the mouse to set the control points.
+Clicking with the mouse sets the control points' location and the mouse click's duration sets their weights.
+
+**Keyboard controls**
+- **T**: Toggle animated point tracking.
+- **Z/H**: Zoom in/out.
+- **R/D/F/G**: Move camera.
+- **C**: Clear screen.
+
+![Splines Demo](/extras/splines.gif)
