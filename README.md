@@ -28,3 +28,14 @@ g++ 03_RayTracing/main.cpp -o RayTracing -lglut -lGLU -lGL
 g++ 04_Stork/main.cpp -o Stork -lglut -lGLU -lGL
 g++ 05_StorkGame/main.cpp -o StorkGame -lglut -lGLU -lGL
 ```
+
+## Usage
+### 01 Angry Birds
+Drag the red bird with the mouse from the slingshot to the left and try to hit the green bird.
+
+**Keyboard controls**
+- **S**: Toggle gravity of the green bird making hitting it easier.
+- **E**: Toggle automatic vertical movement of the green bird.
+- **R/D/F/G**: Manual movement of the green bird (up/down movement only allowed when the automatic movement is disabled).
+
+![Angry Birds Gameplay](/extras/angrybirds.gif)
