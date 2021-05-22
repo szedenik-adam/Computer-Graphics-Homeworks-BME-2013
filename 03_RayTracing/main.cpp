@@ -171,7 +171,7 @@ public:
 	}
 
 	static Vector Reflection(Vector dir, Vector normal) {
-		return dir + normal * ((normal * dir) * (-5));//-2 alapból, -1-nél szaros lesz a fém sík, -5-nél minden hülyeség eltûnik :D
+		return dir + normal * ((normal * dir) * (-5));//-2 alapból, -1-nél szaros lesz a fém sík, -5-nél minden hülyeség eltûnik
 	}
 	bool Refraction(Vector& dir, Vector& normal, Vector& refraction_out) {
 		float cosa = normal * (-1) * dir, cn;                    cn = n;
@@ -697,6 +697,7 @@ void onIdle() {
 	Sleep(100);
 #else
 	usleep(100 * 1000);
+#endif
 }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -728,3 +729,4 @@ int main(int argc, char** argv) {
 
 	return 0;
 }
+
