@@ -66,3 +66,16 @@ Renders very slowly since the CPU does the majority of the calculations (do not 
 - **W/A/S/D**: Move camera.
 
 ![Ray Tracing Scene](/extras/20131108_g3_remote1_hidef.png)
+
+### 04 Stork
+3D Stork model whose body is made using two Catmul-Rom splines. The body is basically a curved and variable width cylinder (one spline defines the body's middle axis, the other one sets the body's thickness). The legs are regular cylinders and the beak is a simple cone. There is also a frog which is made of only ellipsoids and a firefly that emits light.
+
+**Keyboard controls**
+- **C**: Enables the rotation of the stork and frog.
+- **Z/H**: Move camera up/down.
+- **R/D/F/G**: Move camera horizontally.
+- **0/1/2**: Decrease the stork's spine and body width's splines' specific control point's weight.
+- **3**: Decreases camera movement speed.
+- **4**: Increases camera movement speed.
+
+![3D Stork](/extras/20131202_golya_most_extreme.png)
