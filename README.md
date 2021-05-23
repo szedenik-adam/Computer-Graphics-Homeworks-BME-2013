@@ -46,6 +46,7 @@ Use the mouse to set the control points.
 Clicking with the mouse sets the control points' location and the mouse click's duration sets their weights.
 
 **Keyboard controls**
+- **\<space\>**: Start animation.
 - **T**: Toggle animated point tracking.
 - **Z/H**: Zoom in/out.
 - **R/D/F/G**: Move camera.
@@ -79,3 +80,16 @@ Renders very slowly since the CPU does the majority of the calculations (do not 
 - **4**: Increases camera movement speed.
 
 ![3D Stork](/extras/20131202_golya_most_extreme.png)
+
+### 05 Stork Game
+Pick up and eat the frogs with the stork.
+
+**Keyboard controls**
+- **W**: Walk forward.
+- **\<space\>**: Grab with beak.
+- **B**: Turn left.
+- **J**: Turn right.
+- **Z/H**: Move camera up/down.
+- **R/D/F/G**: Move camera horizontally.
+
+![Stork Gameplay](/extras/storkgame.gif)
