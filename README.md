@@ -1,6 +1,10 @@
 # Computer Graphics Homeworks (BME 2013)
 Some multi-platform OpenGL C++ applications (2 of them are games).
 
+## Online Demo
+[Angry Birds](https://szedenik-adam.github.io/Computer-Graphics-Homeworks-BME-2013/www/AngryBirds.html) | [Splines](https://szedenik-adam.github.io/Computer-Graphics-Homeworks-BME-2013/www/Splines.html) | [Stork Game](https://szedenik-adam.github.io/Computer-Graphics-Homeworks-BME-2013/www/StorkGame.html)
+------------ | ------------- | -------------
+
 ## Build on Windows
 1. Download or clone the repository.
 2. (optional) Build external dependencies and copy them to the external_dependencies folder: **vcpkg install glew:x64-windows freeglut:x64-windows**
