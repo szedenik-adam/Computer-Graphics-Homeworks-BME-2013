@@ -18,6 +18,7 @@
 #define PI 3.14159265358979323846
 #define spring_const 0.0001
 #define gravity_const 0.000009
+#define SHOW_MOUSE_SENSITIVE_PART_ON_KEY_A 0
 
 #define Black        Color(0,0,0)
 #define White        Color(1,1,1)
@@ -361,7 +362,10 @@ bool isMouseDown = false;
 typedef enum _GameState { Idle, BirdGrabbed, BirdLaunching, BirdFlying, BirdHit } GameState;
 GameState gamestate;
 
+#if SHOW_MOUSE_SENSITIVE_PART_ON_KEY_A
 char image[screenWidth * screenHeight];	// egy alkalmazás ablaknyi kép
+bool drawimg = false;
+#endif
 
 CompositeShape* CreateBird(Color main_color)
 {
@@ -433,7 +437,6 @@ void onInitialization() {
 	CreateRubber();
 }
 
-bool drawimg = false;
 // Rajzolas, ha az alkalmazas ablak ervenytelenne valik, akkor ez a fuggveny hivodik meg
 void onDisplay() {
 	glClearColor(0.1f, 0.2f, 0.3f, 1.0f);		// torlesi szin beallitasa
@@ -446,8 +449,9 @@ void onDisplay() {
 
 	for (int i = 0; i < 2; i++) rubber[i].Draw();
 
-	if (drawimg)
-		glDrawPixels(screenWidth, screenHeight, GL_GREEN, GL_BYTE, image);
+#if SHOW_MOUSE_SENSITIVE_PART_ON_KEY_A
+	if (drawimg) glDrawPixels(screenWidth, screenHeight, GL_GREEN, GL_BYTE, image);
+#endif
 
 	glMatrixMode(GL_MODELVIEW);				// A MODELVIEW transzformaciot egysegmatrixra inicializaljuk
 	glLoadIdentity();
@@ -460,8 +464,8 @@ char enemymoving = 0;
 // Billentyuzet esemenyeket lekezelo fuggveny (lenyomas)
 void onKeyboard(unsigned char key, int x, int y) {
 	Vector v;
+#if SHOW_MOUSE_SENSITIVE_PART_ON_KEY_A
 	if (key == 'a') {
-
 		for (int Y = 400; Y < 600; Y++)
 			for (int X = 0; X < 200; X++) {
 				v.x = (((float)X) / (600 / 2)) - 1;
@@ -470,6 +474,7 @@ void onKeyboard(unsigned char key, int x, int y) {
 			}
 		drawimg = !drawimg;
 	}
+#endif
 	if (key == 's') { gravitybird = !gravitybird; }
 	if (key == 'd') { enemymoving |= 1; }
 	if (key == 'g') { enemymoving |= 2; }
