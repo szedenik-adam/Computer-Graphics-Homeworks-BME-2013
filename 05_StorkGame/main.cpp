@@ -207,7 +207,7 @@ public:
 		if (lightN == 8) lightN--;
 		light_pos[lightN] = pos;
 		light_isDirectional[lightN] = isDirectional;
-		float array_[4] = { pos.x, pos.y, pos.z, (isDirectional) ? (0) : (1) };
+		float array_[4] = { pos.x, pos.y, pos.z, (float)((isDirectional) ? (0) : (1)) };
 		glLightfv(GL_LIGHT0 + lightN, GL_POSITION, array_);
 
 		array_[0] = IAmbient.r; array_[1] = IAmbient.g; array_[2] = IAmbient.b; array_[3] = 1;
@@ -271,7 +271,7 @@ public:
 			if (!x) x = 1; if (x > 1022) x = 1022;
 			if (!y) y = 1; if (y > 1022) y = 1022;
 			INT32 pixel = bitmap[x + 1024 * y];
-			if (pixel & 255 > 100) pixel -= 40 + (40 << 8) + (40 << 16);
+			if ((pixel & 255) > 100) pixel -= 40 + (40 << 8) + (40 << 16);
 			bitmap[x + 1024 * y] = pixel; bitmap[x + 1 + 1024 * y] = pixel; bitmap[x + 1024 * (y + 1)] = pixel;
 			bitmap[x - 1 + 1024 * y] = pixel; bitmap[x + 1024 * (y - 1)] = pixel;
 		}
@@ -738,7 +738,7 @@ public:
 		this->gl_light = gl_light;
 		if (gl_light == 0) { glDisable(gl_light); return; }
 
-		float array_[4] = { pos.x, pos.y, pos.z - 0.1, 1 };
+		float array_[4] = { pos.x, pos.y, pos.z - 0.1f, 1 };
 
 		array_[0] = 0; array_[1] = 0; array_[2] = 0; array_[3] = 1;
 		glLightfv(gl_light, GL_AMBIENT, array_);
@@ -751,7 +751,7 @@ public:
 
 		glLightf(gl_light, GL_CONSTANT_ATTENUATION, 0);
 		glLightf(gl_light, GL_LINEAR_ATTENUATION, 0);
-		glLightf(gl_light, GL_QUADRATIC_ATTENUATION, 0.02);
+		glLightf(gl_light, GL_QUADRATIC_ATTENUATION, 0.02f);
 
 		glEnable(gl_light);
 	}
@@ -1262,7 +1262,7 @@ void onDisplay()
 	golya.Draw();
 	Vector dir = (View::lookat - View::eye).normalize(); float cos_fov = cos(View::fov * PI / 180); //béka-kilóg tesztre inkább MVP matrix-ot kellene használni (ezt:http://stackoverflow.com/questions/6301085/how-to-check-if-an-object-lies-outside-the-clipping-volume-in-opengl)
 	for (int i = 0; i < frog_count; i++) if (dir * ((frogs[i].pos - View::eye).normalize()) >= cos_fov) { float distance = View::eye.Distance(frogs[i].pos); frogs[i].Draw(distance); drawnfrogs++; }
-
+	
 	glutSwapBuffers();     				// Buffercsere: rajzolas vege
 }
 char navigation = 0; int navtime = 0; bool rotate_enabled = false; float navspeed = 0.02f;
