@@ -17,9 +17,9 @@
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
       canvas.emscripten { border: 0px none; background-color: black; }
 
-      #emscripten_logo {
-        display: inline-block;
-        margin: 0;
+
+      @media (orientation: portrait) {
+        input[type=button] { height: 50px; }
       }
 
       .spinner {
@@ -106,6 +106,36 @@
         <span id='controls'>
             <span>
                 <input type="button" value="Fullscreen" onclick="Module.requestFullscreen(false,false)">
+            </span>
+            <span>
+                <input type="button" value="Move left"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'D'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'D'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Move right"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'G'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'G'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Move up"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'R'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'R'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Move down"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'F'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'F'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Toggle gravity"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'S'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'S'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Toggle movement"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'E'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'E'.charCodeAt(0)}))">
             </span>
         </span>
 

@@ -26,6 +26,10 @@
       /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
       canvas.emscripten { border: 0px none; background-color: black;}
 
+      @media (orientation: portrait) {
+        input[type=button] { height: 50px; }
+      }
+
       .spinner {
         height: 30px;
         width: 30px;
@@ -108,13 +112,64 @@
 	    <div class="spinner" id='spinner'></div>
 	    <div class="emscripten" id="status">Downloading...</div>
 
-		<span id='controls'>
-		  <span><input type="checkbox" id="resize" checked>Resize canvas</span>
-		  <span><input type="checkbox" id="pointerLock">Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
-		  <span><input type="button" value="Fullscreen" onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked,
+        <span id='controls'>
+            <span><input type="checkbox" id="resize" checked>Resize canvas</span>
+            <span><input type="checkbox" id="pointerLock">Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
+            <span>
+                <input type="button" value="Fullscreen" onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked,
 		                                                                            document.getElementById('resize').checked)">
-		  </span>
-		</span>
+            </span>
+            <span>
+                <input type="button" value="Camera left"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'D'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'D'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Camera right"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'G'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'G'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Camera forward"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'R'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'R'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Camera backward"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'F'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'F'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Camera up"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'Z'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'Z'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Camera down"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'H'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'H'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Turn left"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'B'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'B'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Turn right"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'J'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'J'.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Grab"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':' '.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':' '.charCodeAt(0)}))">
+            </span>
+            <span>
+                <input type="button" value="Walk"
+                       onmousedown="window.dispatchEvent(new KeyboardEvent('keydown',{'keyCode':'W'.charCodeAt(0)}))"
+                       onmouseup="window.dispatchEvent(new KeyboardEvent('keyup',{'keyCode':'W'.charCodeAt(0)}))">
+            </span>
+        </span>
 	    <div class="emscripten">
 	      <progress value="0" max="100" id="progress" hidden=1></progress>
 	    </div>
