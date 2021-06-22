@@ -33,6 +33,38 @@ g++ 04_Stork/main.cpp -o Stork -lglut -lGLU -lGL
 g++ 05_StorkGame/main.cpp -o StorkGame -lglut -lGLU -lGL
 ```
 
+## Build with emscripten on Linux
+1. Install emsdk dependencies
+```
+sudo apt install python3 cmake git
+```
+2. Download emsdk
+```
+git clone https://github.com/emscripten-core/emsdk.git
+```
+3. Build emscripten
+```
+cd emsdk
+./emsdk install latest
+./emsdk activate latest
+source ./emsdk_env.sh
+cd ..
+```
+4. Download repository
+```
+git clone https://github.com/szedenik-adam/Computer-Graphics-Homeworks-BME-2013
+```
+5. Build
+```
+cd Computer-Graphics-Homeworks-BME-2013/01_AngryBirds
+./emsdk/upstream/emscripten/emcc main.cpp -s LEGACY_GL_EMULATION=1 -s GL_UNSAFE_OPTS=1 -s GL_FFP_ONLY=1 -s MAX_WEBGL_VERSION=2 --profiling -O3 -flto -o AngryBirds.html
+cd ../../Computer-Graphics-Homeworks-BME-2013/02_Splines
+./emsdk/upstream/emscripten/emcc main.cpp -s LEGACY_GL_EMULATION=1 -s GL_UNSAFE_OPTS=1 -s GL_FFP_ONLY=1 -s MAX_WEBGL_VERSION=2 --profiling -O3 -flto -o Splines.html
+cd ../../Computer-Graphics-Homeworks-BME-2013/06_ModernStorkGame
+./emsdk/upstream/emscripten/emcc main.cpp Texture.cpp -Iglm -std=c++20 -O3 -flto --preload-file shader.fs --preload-file shader.vs -s MAX_WEBGL_VERSION=2 -s USE_GLFW=3 -s WASM=3 --profiling -o StorkGame.html
+```
+Note: ommit optimalization flags (```-O3 -flto```) when developing, since they are greatly increasing the compile time.
+
 ## Usage
 ### 01 Angry Birds
 Drag the red bird with the mouse from the slingshot to the left and try to hit the green bird.
