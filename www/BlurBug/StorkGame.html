@@ -46,12 +46,7 @@
 
         @media (orientation: portrait) {
             input[type=button] {
-                padding: 50px;
-                font-size: xx-large;
-            }
-
-            html {
-                overscroll-behavior: none;
+                height: 50px;
             }
         }
 
@@ -114,13 +109,14 @@
             }
         }
 
-        #status {
+        #status, #warning {
             display: inline-block;
             vertical-align: top;
             margin-left: 20px;
             font-weight: bold;
-            color: rgb(120, 120, 120);
         }
+        #warning { color: rgb(200, 60, 60); }
+        #status { color: rgb(120, 120, 120); }
 
         #progress {
             height: 20px;
@@ -166,10 +162,11 @@
         window.setTimeout(function(){
             window.removeEventListener("blur", GLFW.onBlur, true);
             window.addEventListener("blur", function(event){
-                //console.log("blur ", event, event.target == window);
+                console.log("blur ", event, event.target == window);
                 if(event.target == window) GLFW.onBlur(event);
             }, true);
-        }, 1000); // Wait for 1 seconds before applying the patch.
+            document.getElementById("warning").textContent = "Blur bug patch active.";
+        }, 10000); // Wait for 10 seconds before applying the patch.
         
         function init()
         {
@@ -184,12 +181,14 @@
                     input.onmouseout = function(event){onControlButton(event, 0);};
                 }
             }
+            document.getElementById("warning").textContent = "Blur bug demo.";
         }
     </script>
 </head>
 <body onload="init()">
     <div id='header'>
         <div class="spinner" id='spinner'></div>
+        <div class="emscripten" id="warning">Blur bug demo.</div>
         <div class="emscripten" id="status">Downloading...</div>
 
         <span id='controls'>
