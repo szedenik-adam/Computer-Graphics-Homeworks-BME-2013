@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>Stork Game</title>
     <style>
         body {
@@ -20,6 +21,11 @@
 
         #footer {
             flex: 0 1 10px;
+        }
+
+        #bottom-controls {
+            flex: 0 1 auto;
+            display: inline-block; /*prevents page scrolling*/
         }
 
         .emscripten {
@@ -45,12 +51,17 @@
         }
 
         @media (orientation: portrait) {
+            .wide-button {
+                padding: 10px 20px 10px 20px !important;
+                background-color: aqua;
+            }
             input[type=button] {
-                padding: 50px;
-                font-size: xx-large;
+                padding: 10px 0 10px 0;
+                font-size: small;
+                min-width: 50px;
             }
 
-            html {
+            body {
                 overscroll-behavior: none;
             }
         }
@@ -150,8 +161,18 @@
             font-family: 'Lucida Console', Monaco, monospace;
             outline: none;
         }
+        #camera-horizontal, #camera-vertical, #stork-movement {
+            width: 70px;
+            height: 40px;
+            background-color: paleturquoise;
+            border: 1px solid slateblue;
+            text-align: center;
+            line-height: 40px;
+            display: inline-block;
+        }
     </style>
     <script>
+        var camH = {}, camV = {}, sMove = {};
         // Keyboard emulation with buttons.
         function onControlButton(e, isPressed)
         {
@@ -178,11 +199,70 @@
             {
                 if('key' in input.dataset)
                 {
-                    input.value += ' ('+input.dataset['key']+')';
-                    input.onmousedown = function(event){onControlButton(event, 1);};
-                    input.onmouseup = function(event){onControlButton(event, 0);};
-                    input.onmouseout = function(event){onControlButton(event, 0);};
+                    if("ontouchstart" in window) {
+                        input.ontouchstart = function(event){onControlButton(event, 1);};
+                        input.ontouchend = function(event){onControlButton(event, 0);};
+                    }else{
+                        input.value += ' ('+input.dataset['key']+')';
+                        input.onmousedown = function(event){onControlButton(event, 1);};
+                        input.onmouseup = function(event){onControlButton(event, 0);};
+                        input.onmouseout = function(event){onControlButton(event, 0);};
+                    }
                 }
+            }
+            if("ontouchstart" in window)
+            {
+                document.getElementById("header").ontouchmove=function(e){ e.preventDefault(); };
+                document.getElementById("pointerLockContainer").style.display = "none";
+                document.getElementById("bottom-controls").ontouchmove=function(e){ e.preventDefault(); };
+                document.getElementById("header").style.display = "none";
+
+                /*const canvas = document.getElementsByClassName("emscripten_border")[0];
+                const header = document.getElementById("header");
+                document.body.insertBefore(canvas, header);*/
+            }
+            else {
+                //document.getElementById("bottom-controls").style.display = "none";
+            }
+            MouseToArrowKeyMap("camera-horizontal", camH, ['D','G','R','F']);
+            MouseToArrowKeyMap("camera-vertical", camV, ['D','G','Z','H']);
+            MouseToArrowKeyMap("stork-movement", sMove, ['B','J','W',' ']);
+        }
+        function MouseToArrowKeyMap(controlDivId, stateVar, keys)
+        {
+            var div = document.getElementById(controlDivId);
+            const startMove = function(event){
+                if('touches' in event){event.x = event.touches[0].screenX; event.y = event.touches[0].screenY;}
+                stateVar={downPos:{x:event.x, y:event.y}, state:0, active:1};
+                event.preventDefault();
+            };
+            const updateMove = function(event){ 
+                if(!stateVar.active) return;
+                if('touches' in event){event.x = event.touches[0].screenX; event.y = event.touches[0].screenY;}
+                if((stateVar.downPos.x - event.x > 10) ^ !!(stateVar.state&1)) {stateVar.state ^= 1; GLFW.onKeyChanged(keys[0].charCodeAt(0),    stateVar.state&1);}
+                if((event.x - stateVar.downPos.x > 10) ^ !!(stateVar.state&2)) {stateVar.state ^= 2; GLFW.onKeyChanged(keys[1].charCodeAt(0), !!(stateVar.state&2));}
+                if((stateVar.downPos.y - event.y > 10) ^ !!(stateVar.state&4)) {stateVar.state ^= 4; GLFW.onKeyChanged(keys[2].charCodeAt(0), !!(stateVar.state&4));}
+                if((event.y - stateVar.downPos.y > 10) ^ !!(stateVar.state&8)) {stateVar.state ^= 8; GLFW.onKeyChanged(keys[3].charCodeAt(0), !!(stateVar.state&8));}
+            };
+            const stopMove = function(event){
+                stateVar.active=0;
+                if(stateVar.state&1){GLFW.onKeyChanged(keys[0].charCodeAt(0),0);}
+                if(stateVar.state&2){GLFW.onKeyChanged(keys[1].charCodeAt(0),0);}
+                if(stateVar.state&4){GLFW.onKeyChanged(keys[2].charCodeAt(0),0);}
+                if(stateVar.state&8){GLFW.onKeyChanged(keys[3].charCodeAt(0),0);}
+                stateVar.state = 0;
+            };
+            if("ontouchstart" in window)
+            {
+                div.ontouchstart = startMove;
+                window.addEventListener("touchend", stopMove, true);
+                window.addEventListener("touchmove", updateMove, true);
+            }
+            else
+            {
+                div.onmousedown = startMove;
+                window.addEventListener("mouseup", stopMove, true);
+                window.addEventListener("mousemove", updateMove, true);
             }
         }
     </script>
@@ -194,40 +274,40 @@
 
         <span id='controls'>
             <span><input type="checkbox" id="resize" checked>Resize canvas</span>
-            <span><input type="checkbox" id="pointerLock">Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
+            <span id="pointerLockContainer"><input type="checkbox" id="pointerLock">Lock/hide mouse pointer &nbsp;&nbsp;&nbsp;</span>
             <span>
                 <input type="button" value="Fullscreen" onclick="Module.requestFullscreen(document.getElementById('pointerLock').checked,
 		                                                                            document.getElementById('resize').checked)">
             </span>
             <span>
-                <input type="button" value="Camera left" data-key="D">
+                <input type="button" value="🎥 ◀" data-key="D">
             </span>
             <span>
-                <input type="button" value="Camera right" data-key="G">
+                <input type="button" value="🎥 ▶" data-key="G">
             </span>
             <span>
-                <input type="button" value="Camera forward" data-key="R">
+                <input type="button" value="🎥 ∧" data-key="R">
             </span>
             <span>
-                <input type="button" value="Camera backward" data-key="F">
+                <input type="button" value="🎥 ∨" data-key="F">
             </span>
             <span>
-                <input type="button" value="Camera up" data-key="Z">
+                <input type="button" value="🎥 ▲" data-key="Z">
             </span>
             <span>
-                <input type="button" value="Camera down" data-key="H">
+                <input type="button" value="🎥 ▼" data-key="H">
             </span>
             <span>
-                <input type="button" value="Turn left" data-key="B">
+                <input type="button" value="↺" data-key="B">
             </span>
             <span>
-                <input type="button" value="Turn right" data-key="J">
+                <input type="button" value="↻" data-key="J">
             </span>
             <span>
-                <input type="button" value="Grab" data-key=" ">
+                <input type="button" value="Grab 🐸" data-key=" " class="wide-button">
             </span>
             <span>
-                <input type="button" value="Walk" data-key="W">
+                <input type="button" value="🏃‍♂️" data-key="W" class="wide-button">
             </span>
         </span>
         <div class="emscripten">
@@ -237,6 +317,11 @@
 
     <div class="emscripten_border">
         <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
+    </div>
+    <div id="bottom-controls">
+        <div id="camera-horizontal">🎥↔</div>
+        <div id="camera-vertical">🎥↕</div>
+        <div id="stork-movement">🦩🏃‍♂️</div>
     </div>
     <div id="footer">
         <textarea id="output"></textarea>
