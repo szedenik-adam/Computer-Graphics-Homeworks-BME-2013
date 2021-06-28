@@ -23,9 +23,15 @@
             flex: 0 1 10px;
         }
 
-        #bottom-controls {
+		#bottom-bar {
             flex: 0 1 auto;
-            display: inline-block; /*prevents page scrolling*/
+            /*display: inline-block; prevents page scrolling*/
+            display: flex; /* Prevents page scrolling + puts child elements in one row.  */
+		}
+        #bottom-controls {
+            display: flex; /* Fills spaces evenly between child elements. */
+            justify-content: space-evenly;
+            flex: 1 1 auto;
         }
 
         .emscripten {
@@ -40,7 +46,7 @@
         }
 
         div.emscripten_border {
-            border: 1px solid black;
+            /*border: 1px solid black;*/
             flex: 1 1 auto;
             overflow: hidden;
         }
@@ -170,6 +176,11 @@
             line-height: 40px;
             display: inline-block;
         }
+        #scrollockDiv {
+        	max-height: 40px;
+    	    text-align: center;
+			font-size: xx-small;
+        }
     </style>
     <script>
         var camH = {}, camV = {}, sMove = {};
@@ -191,7 +202,7 @@
                 if(event.target == window) GLFW.onBlur(event);
             }, true);
         }, 1000); // Wait for 1 seconds before applying the patch.
-        
+
         function init()
         {
             var inputs = document.getElementsByTagName("INPUT");
@@ -220,10 +231,17 @@
                 /*const canvas = document.getElementsByClassName("emscripten_border")[0];
                 const header = document.getElementById("header");
                 document.body.insertBefore(canvas, header);*/
+
             }
             else {
                 //document.getElementById("bottom-controls").style.display = "none";
             }
+            /*document.querySelectorAll('*').forEach(function(elem) {
+                elem.addEventListener('scroll', function() {
+                    console.log(this);
+                });
+            });*/
+
             MouseToArrowKeyMap("camera-horizontal", camH, ['D','G','R','F']);
             MouseToArrowKeyMap("camera-vertical", camV, ['D','G','Z','H']);
             MouseToArrowKeyMap("stork-movement", sMove, ['B','J','W',' ']);
@@ -236,7 +254,7 @@
                 stateVar={downPos:{x:event.x, y:event.y}, state:0, active:1};
                 event.preventDefault();
             };
-            const updateMove = function(event){ 
+            const updateMove = function(event){
                 if(!stateVar.active) return;
                 if('touches' in event){event.x = event.touches[0].screenX; event.y = event.touches[0].screenY;}
                 if((stateVar.downPos.x - event.x > 10) ^ !!(stateVar.state&1)) {stateVar.state ^= 1; GLFW.onKeyChanged(keys[0].charCodeAt(0),    stateVar.state&1);}
@@ -264,6 +282,19 @@
                 window.addEventListener("mouseup", stopMove, true);
                 window.addEventListener("mousemove", updateMove, true);
             }
+        }
+    	function preventDefault(e) { e.preventDefault(); }
+
+        function ScrollLock(eventOrBool)
+        {
+        	var lock = null, checkBox = null;
+        	if(typeof eventOrBool == "boolean") { lock = eventOrBool; checkBox = document.getElementById("scrollock"); }
+        	else { lock = event.target.checked; }
+
+        	if (lock) { disableScroll(); }
+        	else { enableScroll(); }
+
+        	if(checkBox) checkBox.checked = lock;
         }
     </script>
 </head>
@@ -318,10 +349,13 @@
     <div class="emscripten_border">
         <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
     </div>
-    <div id="bottom-controls">
-        <div id="camera-horizontal">🎥↔</div>
-        <div id="camera-vertical">🎥↕</div>
-        <div id="stork-movement">🦩🏃‍♂️</div>
+    <div id="bottom-bar">
+	    <div id="bottom-controls">
+	        <div id="camera-horizontal">🎥↔</div>
+	        <div id="camera-vertical">🎥↕</div>
+	        <div id="stork-movement">🦩🏃‍♂️</div>
+	    </div>
+	    <div id="scrollockDiv"><input type="checkbox" name="scrollock" id="scrollock" onchange="ScrollLock(event)"><label for="scrollock"><br>Scroll<br>Lock</label></div>
     </div>
     <div id="footer">
         <textarea id="output"></textarea>
@@ -402,6 +436,50 @@
         if (text) Module.printErr('[post-exception status] ' + text);
         };
         };
+    </script>
+    <script type="text/javascript">
+ // source: https://stackoverflow.com/questions/4770025/how-to-disable-scrolling-temporarily
+ // left: 37, up: 38, right: 39, down: 40,
+ // spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+ var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+ function preventDefault(e) {
+   e.preventDefault();
+ }
+
+ function preventDefaultForScrollKeys(e) {
+   if (keys[e.keyCode]) {
+     preventDefault(e);
+     return false;
+   }
+ }
+
+ // modern Chrome requires { passive: false } when adding event
+ var supportsPassive = false;
+ try {
+   window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+     get: function () { supportsPassive = true; }
+   }));
+ } catch(e) {}
+
+ var wheelOpt = supportsPassive ? { passive: false } : false;
+ var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+ // call this to Disable
+ function disableScroll() {
+   window.addEventListener('DOMMouseScroll', preventDefault, false); // older FF
+   window.addEventListener(wheelEvent, preventDefault, wheelOpt); // modern desktop
+   window.addEventListener('touchmove', preventDefault, wheelOpt); // mobile
+   window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+ }
+
+ // call this to Enable
+ function enableScroll() {
+   window.removeEventListener('DOMMouseScroll', preventDefault, false);
+   window.removeEventListener(wheelEvent, preventDefault, wheelOpt);
+   window.removeEventListener('touchmove', preventDefault, wheelOpt);
+   window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+ }
     </script>
     <script async type="text/javascript" src="StorkGame.js"></script>
 </body>
